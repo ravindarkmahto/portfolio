@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ravindar Mahto - Portfolio</title>
+
+<!-- Fonts & FontAwesome for Social Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  :root {
+    --ink: #1e231f;
+    --paper: #ece8dc;
+    --paper-2: #e2ddcb;
+    --moss: #54684a;
+    --moss-dark: #3d4d37;
+    --ochre: #b8863a;
+    --indigo: #33456b;
+    --rule: #c9c2ac;
+    --card: #f4f1e6;
+    --sidebar-width: 320px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.95;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 1000;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .90em;
+    text-transform: uppercase;
+    color: var(--moss-dark);
+  }
+
+  a { color: var(--indigo); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- FULLSCREEN LAYOUT ---------- */
+  .app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  aside.sidebar {
+    width: var(--sidebar-width);
+    background: var(--paper-2);
+    border-right: 1px solid var(--rule);
+    /* MODIFICATION 1: Increased top padding to shift the whole section down */
+    padding: 100px 24px 40px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .profile-pic {
+    width: 230px;
+    height: 230px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid var(--card);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    /* MODIFICATION 2: Increased bottom margin to separate from name, also slightly shifts things down */
+    margin-bottom: 25px; 
+  }
+
+  .sidebar-name {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .82rem;
+    color: var(--moss-dark);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  /* Social Icons */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    color: var(--moss-dark);
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .social-icon:hover {
+    background: var(--moss);
+    color: var(--paper);
+    transform: translateY(-2px);
+    border-color: var(--moss);
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--moss-dark);
+    text-align: center;
+  }
+
+  /* ---------- MAIN CONTENT AREA ---------- */
+  main.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Prevents flex overflow */
+  }
+
+  /* Sticky Top Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(236,232,220,.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .tabs { display: flex; gap: 8px; }
+  .tab-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .82rem;
+    letter-spacing: .04em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+    opacity: .65;
+    padding: 8px 18px;
+    border-radius: 999px;
+    transition: all .2s ease;
+  }
+  .tab-btn:hover { opacity: 1; }
+  .tab-btn.active {
+    opacity: 1;
+    background: var(--moss);
+    color: var(--paper);
+  }
+
+  .content-body {
+    padding: 40px 60px 80px;
+    max-width: 1100px;
+  }
+
+  /* Page Sections */
+  section.page { display: none; }
+  section.page.active { display: block; animation: fade .35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .block { margin-bottom: 48px; }
+  .block h2 { font-size: 1.6rem; margin-bottom: 6px; }
+
+  /* Resume Entries */
+  .entry {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .entry:last-child { border-bottom: 1px solid var(--rule); }
+  .entry .when {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem;
+    color: var(--moss-dark);
+    padding-top: 3px;
+  }
+  .entry h3 { font-size: 1.1rem; }
+  .entry .org { font-size: .88rem; color: var(--ochre); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .entry ul { margin: 10px 0 0; padding-left: 18px; }
+  .entry li { margin-bottom: 6px; font-size: .94rem; }
+  .sub-entry { margin-top: 16px; }
+  .sub-entry h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: .92rem;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+
+  /* Chips */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .76rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    padding: 5px 12px;
+    border-radius: 5px;
+    color: var(--moss-dark);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 24px;
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .card .when { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; color: var(--ochre); }
+  .card p { font-size: .92rem; margin: 8px 0 0; color: #333; }
+
+  .fieldwork-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .fieldwork-list li {
+    padding: 12px 16px;
+    background: var(--card);
+    border-left: 3px solid var(--moss);
+    font-size: .94rem;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .82rem;
+    background: var(--moss);
+    color: var(--paper);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--moss-dark); text-decoration: none; }
+
+  /* Responsive Adjustments */
+  @media (max-width: 900px) {
+    .app-container { flex-direction: column; }
+    aside.sidebar { 
+        width: 100%; 
+        height: auto; 
+        position: relative; 
+        border-right: none; 
+        border-bottom: 1px solid var(--rule); 
+        /* MODIFICATION 3: Reset padding on mobile so it doesn't look weird */
+        padding: 40px 24px; 
+    }
+    nav { justify-content: center; }
+    .content-body { padding: 30px 20px; }
+    .two-col, .cards, .entry { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Profile Image (Replace URL with your own) -->
+    <img src="c:\Users\Neeraj Mahto\Pictures\Screenshots\Screenshot 2026-07-20 215521.png" alt="Ravindar Mahto" class="profile-pic">
+
+    <h1 class="sidebar-name">Ravindar Mahto</h1>
+    <div class="sidebar-title">Research Associate @ NCAER</div>
+
+    <!-- Social Media Icons Links -->
+    <div class="social-links">
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/ravindar-mahto-0379b7223/" target="_blank" rel="noopener" class="social-icon" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/Ravindar8826" target="_blank" rel="noopener" class="social-icon" title="GitHub">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <!-- Twitter / X -->
+      <a href="https://x.com/RavindarMa37278" target="_blank" rel="noopener" class="social-icon" title="Twitter">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+      <!-- Mail -->
+      <a href="mailto:ravindark.mahto@gmail.com" class="social-icon" title="Email">
+        <i class="fa-regular fa-envelope"></i>
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      ravindark.mahto@gmail.com
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- Top Navigation -->
+    <nav>
+      <div class="tabs">
+        <button class="tab-btn active" data-page="about" onclick="showPage('about')">About</button>
+        <button class="tab-btn" data-page="resume" onclick="showPage('resume')">Resume</button>
+        <button class="tab-btn" data-page="research" onclick="showPage('research')">Research &amp; Projects</button>
+      </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <div class="content-body">
+
+      <!-- ABOUT -->
+      <section class="page active" id="page-about">
+        <div class="block">
+          <h2>About</h2>
+          <!-- MODIFICATION 4: Increased max-width to allow text to spread wider -->
+          <p style="margin-top:20px;max-width:90ch;">
+            I am currently working as a Research Associate at NCAER (National Council of Applied Economic Research), and I completed
+            my master's in economics at Azim Premji University. I don't have one fixed area of interest — the themes I keep returning
+            to are climate change, environment, green energy, and Artificial Intelligence.
+          </p>
+          <p style="margin-top:20px;max-width:90ch;">
+            My work sits at the intersection of statistical modelling, macroeconomic data analysis, and data visualisation — using
+            Stata, R, Python, and Power BI to turn large national datasets into analytical insight for policy and financial-sector
+            research. I'm especially interested in data analytics, economic research, and financial markets analysis.
+          </p>
+      
+        </div>
+      </section>
+
+      <!-- RESUME -->
+      <section class="page" id="page-resume">
+        <div class="block">
+          <span class="eyebrow">Resume</span>
+          <h2>Updated CV</h2>
+          <p style="margin-top:10px;">A quantitative economics graduate with experience in large-scale data analysis and applied
+            econometric research, working with national datasets to support policy and financial-sector research.</p>
+          <a class="btn" style="margin-top:14px;" href="https://drive.google.com/file/d/1SgjuGI4yfHUq7estrhbXVzWbrhUA8jpa/view?usp=drive_link" target="_blank" rel="noopener">Download full CV ↗</a>
+        </div>
+
+        <div class="block">
+          <span class="eyebrow">Education</span>
+          <div class="entry">
+            <div class="when">Aug 2023 – May 2025</div>
+            <div>
+              <h3>MA in Economics</h3>
+              <div class="org">Azim Premji University, Bengaluru, India</div>
+              <div class="chip-group">
+                <span class="chip">Macroeconomic Dynamics</span>
+                <span class="chip">Econometrics of Impact Evaluation</span>
+                <span class="chip">Cross-Section &amp; Panel Data</span>
+              </div>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="when">Oct 2020 – May 2023</div>
+            <div>
+              <h3>BA (Hons) in Economics</h3>
+              <div class="org">University of Delhi, New Delhi, India</div>
+              <div class="chip-group">
+                <span class="chip">Development Economics</span>
+                <span class="chip">International Trade</span>
+                <span class="chip">Econometrics</span>
+                <span class="chip">Money &amp; Financial Markets</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <span class="eyebrow">Experience</span>
+
+          <div class="entry">
+            <div class="when">May 2025 – Present</div>
+            <div>
+              <h3>Research Associate</h3>
+              <div class="org">National Council of Applied Economic Research (NCAER)</div>
+
+              <div class="sub-entry">
+                <h4>Impact Evaluation of Pradhan Mantri Gram Sadak Yojana (PMGSY)</h4>
+                <ul>
+                  <li>Contributed to the impact evaluation of PMGSY across six states; supported primary survey implementation, trained enumerators in CAPI-based data collection, and coordinated with district officials for field operations.</li>
+                  <li>Cleaned, processed, and validated large-scale survey data covering 240+ villages, ensuring high data quality and reliability for empirical research.</li>
+                  <li>Performed econometric analysis including Difference-in-Difference (DiD) estimation, asset index construction, and survey weight calculation using Stata and Python, and mapped PMGSY roads using GIS.</li>
+                </ul>
+              </div>
+
+              <div class="sub-entry">
+                <h4>Assessing Women's Empowerment in India</h4>
+                <ul>
+                  <li>Supported field survey implementation by training enumerators in CAPI-based data collection and coordinating with local/district officials.</li>
+                  <li>Developed and implemented consistency checks in Stata to clean and validate large-scale household survey datasets.</li>
+                  <li>Benchmarked and constructed key indicators using CAMPS 79th Round and NFHS 2019–20 datasets, and conducted Census Enumeration Block (CEB) selection using circular systematic sampling.</li>
+                </ul>
+              </div>
+
+              <div class="sub-entry">
+                <h4>Economic Survey 2025-26 of Uttarakhand: Input for Budget 2025-26</h4>
+                <ul>
+                  <li>Prepared annual and quarterly datasets from monthly MoSPI data, and analyzed inflation trends, computing core and headline inflation using CPI methodology.</li>
+                  <li>Extracted and processed UDISE datasets using Python-based OCR techniques to pull tables from official reports into Excel.</li>
+                </ul>
+              </div>
+
+              <div class="sub-entry">
+                <h4>EIA Study — Rajam Town and Surrounding Villages (CSR)</h4>
+                <ul>
+                  <li>Processed nighttime lights data using Google Earth Engine to generate raster datasets at sub-district level; layered rasters in QGIS and used Python to parse and extract nightlight data.</li>
+                  <li>Gained familiarity with Convolutional Neural Networks (CNNs); data sources included SHRUG and shapefiles.</li>
+                  <li>Implemented time-series and spatial econometric techniques — Chow test, cointegration, Granger causality, and spatial autocorrelation via Moran's I and LISA indicators.</li>
+                </ul>
+              </div>
+
+              <div class="sub-entry">
+                <h4>Assessing Women's Economic Empowerment and Financial Independence</h4>
+                <ul>
+                  <li>Working extensively with the NFHS (2019–20) dataset.</li>
+                  <li>Applying Principal Component Analysis (PCA) and Factor Analysis.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="entry">
+            <div class="when">Dec 2023</div>
+            <div>
+              <h3>Field Researcher</h3>
+              <div class="org">Adharshila, Madhya Pradesh, India</div>
+              <ul>
+                <li>Conducted field research on socioeconomic challenges faced by tribal communities displaced by national park development; evaluated public infrastructure accessibility through site visits to schools, healthcare centers, and government institutions.</li>
+                <li>Submitted a detailed policy report analyzing infrastructure gaps and actionable recommendations for tribal welfare improvement and sustainable development.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="entry">
+            <div class="when">Sep 2022 – Feb 2023</div>
+            <div>
+              <h3>Subject Matter Expert (Economics)</h3>
+              <div class="org">Chegg India Pvt Ltd</div>
+              <ul>
+                <li>Assisted students with queries in microeconomics, econometrics, and statistics.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col block">
+          <div>
+            <span class="eyebrow">Skills</span>
+            <h2 style="font-size:1.2rem;">Programming &amp; Tools</h2>
+            <div class="chip-group">
+              <span class="chip">R</span><span class="chip">Stata</span><span class="chip">Python</span>
+              <span class="chip">MATLAB</span><span class="chip">QGIS</span><span class="chip">LaTeX</span>
+              <span class="chip">Google Earth Engine</span>
+            </div>
+            <h2 style="font-size:1.2rem;margin-top:20px;">Data Visualization</h2>
+            <div class="chip-group">
+              <span class="chip">Power BI</span><span class="chip">Tableau</span>
+              <span class="chip">QGIS</span><span class="chip">Plotly</span>
+            </div>
+          </div>
+          <div>
+            <span class="eyebrow">Certifications</span>
+            <div class="entry" style="border-top:none;padding-top:0;">
+              <div class="when">Mar 2025</div>
+              <div>
+                <h3 style="font-size:.98rem;">Time Series Econometrics</h3>
+                <div class="org">Azim Premji University</div>
+                <p style="font-size:.86rem;margin:6px 0 0;">Random walk, structural breaks, cointegration, autoregression, autocorrelation.</p>
+              </div>
+            </div>
+            <div class="entry" style="border-top:1px solid var(--rule);">
+              <div class="when">Sep 2024</div>
+              <div>
+                <h3 style="font-size:.98rem;">NSSO Unit-Level Data Analysis Workshop</h3>
+                <div class="org">Stats2econo Applied Research</div>
+                <p style="font-size:.86rem;margin:6px 0 0;">Extraction, merging, and matching using NSSO datasets (HCES 2022, PLFS 2022) with Stata.</p>
+              </div>
+            </div>
+            <div class="entry">
+              <div class="when">Jul 2024</div>
+              <div>
+                <h3 style="font-size:.98rem;">Advanced Econometrics with Stata</h3>
+                <div class="org">Stats2econo Applied Research</div>
+                <p style="font-size:.86rem;margin:6px 0 0;">GMM, panel data, difference-in-differences (DiD), non-linear models, PCA, quantile regression.</p>
+              </div>
+            </div>
+            <div class="entry">
+              <div class="when">Jun 2024</div>
+              <div>
+                <h3 style="font-size:.98rem;">MATLAB Onramp Course</h3>
+                <div class="org">MATLAB Academy</div>
+                <p style="font-size:.86rem;margin:6px 0 0;">MATLAB basics including plotting and programming workflows.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <span class="eyebrow">Volunteering</span>
+          <ul class="fieldwork-list">
+            <li><strong>Rapporteur</strong> — Economy and Society in Contemporary India Conference, IIT Bombay (Jan 2025)</li>
+            <li><strong>Documentation volunteer</strong> — Macroeconomic Conference, Azim Premji University (Aug 2024)</li>
+            <li><strong>Workshop support</strong> — Advanced Graduate Workshop, Azim Premji University &amp; INET (Jul 2024)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- RESEARCH & PROJECTS -->
+      <section class="page" id="page-research">
+        <div class="block">
+          <span class="eyebrow">Research &amp; Projects</span>
+          <h2>What you'll find here</h2>
+        </div>
+
+        <div class="two-col block">
+          <div>
+            <h3 style="font-size:1.05rem;">Econometrics</h3>
+            <div class="chip-group">
+              <span class="chip">Time Series</span>
+              <span class="chip">Cross-Sectional &amp; Panel Data</span>
+              <span class="chip">Causal Inference</span>
+              <span class="chip">Basic Econometrics</span>
+              <span class="chip">Spatial Econometrics</span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:1.05rem;">Software Tools</h3>
+            <div class="chip-group">
+              <span class="chip">STATA</span><span class="chip">R</span><span class="chip">QGIS</span>
+              <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">MATLAB</span>
+              <span class="chip">Google Earth Engine</span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:1.05rem;">Datasets</h3>
+            <div class="chip-group">
+              <span class="chip">SAS</span><span class="chip">AIDIS</span><span class="chip">PLFS</span>
+              <span class="chip">HCES</span><span class="chip">NFHS</span><span class="chip">IHDS</span>
+              <span class="chip">CAMPS</span><span class="chip">TUS</span><span class="chip">ASUSE</span>
+              <span class="chip">ASI</span><span class="chip">LASI</span><span class="chip">Nighttime data</span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:1.05rem;">Visualisation</h3>
+            <div class="chip-group">
+              <span class="chip">Python</span><span class="chip">STATA</span><span class="chip">R</span>
+              <span class="chip">MATLAB</span><span class="chip">Plotly</span><span class="chip">Excel</span>
+              <span class="chip">Power BI</span><span class="chip">Tableau</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 style="font-size:1.05rem;margin-bottom:12px;">Field Work</h3>
+          <ul class="fieldwork-list">
+            <li>Caste Dominance and Social Discrimination</li>
+            <li>Crime and Spatial Econometrics</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <span class="eyebrow">Projects</span>
+          <div class="cards">
+            <div class="card">
+              <div class="when">May 2024 – Apr 2025</div>
+              <h3>Caste Dominance and Social Discrimination (Master's Thesis)</h3>
+              <p>Investigated the impact of caste dominance on untouchability practices in rural India using India Human Development Survey (IHDS) data, applying OLS regression to analyze household and village-level outcomes.</p>
+            </div>
+            <div class="card">
+              <div class="when">Nov 2024</div>
+              <h3>Impact of Rural Electrification on Crime Rate</h3>
+              <p>Examined the spatial distribution of electricity supply across districts by integrating IHDS data with district shapefiles, and analyzed the relationship between electricity supply and crime using NCRB data and spatial techniques such as Moran's I and LISA.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.page===name));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
+
+</body>
+</html>
