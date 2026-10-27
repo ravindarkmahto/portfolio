@@ -281,6 +281,25 @@
   }
   .btn-sm:hover { background: var(--moss-dark); text-decoration: none; }
 
+  /* Filter bar (Research & Projects) */
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+  .filter-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .8rem;
+    letter-spacing: .04em;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    color: var(--moss-dark);
+    padding: 6px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    line-height: 1.6;
+    transition: all .2s ease;
+  }
+  .filter-btn:hover { border-color: var(--moss); }
+  .filter-btn.active { background: var(--moss); border-color: var(--moss); color: var(--paper); }
+  .no-results { display: none; font-size: .94rem; color: var(--moss-dark); }
+
   /* Responsive Adjustments */
   @media (max-width: 900px) {
     .app-container { flex-direction: column; }
@@ -546,32 +565,40 @@
       <!-- RESEARCH & PROJECTS -->
       <section class="page" id="page-research">
 
+        <!-- FILTER -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all" onclick="filterResearch('all')">All</button>
+          <button class="filter-btn" data-filter="ongoing" onclick="filterResearch('ongoing')">Ongoing</button>
+          <button class="filter-btn" data-filter="completed" onclick="filterResearch('completed')">Completed</button>
+        </div>
+        <p class="no-results" id="no-results">Nothing to show here yet.</p>
+
         <!-- PAPERS -->
         <div class="block">
           <span class="eyebrow">Research</span>
           <h2 style="margin-bottom:20px;">Papers</h2>
           <div class="cards">
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3><a href="request-thesis.html">Caste Dominance and Social Discrimination (Master's Thesis)</a></h3>
               <p>In this research, I analyze the relationship between the village dominance and the SC household experience of untouchability. To analyze it, I am employing a linear probability model (LPM) and controlling for village and household controls with the state fixed effect. I do not find any significant findings in SC households experience of untouchability when they are in a UC dominant village. Other than that, I have conducted three robustness tests by treating the independent variable as continuous; the second robustness test is utilizing village and land criteria, and the third is utilizing land criteria alone.</p>
               <a class="btn-sm" style="margin-top:12px;" href="request-thesis.html">Request Access ↗</a>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>Proxying for Streetlight using Nighttime Light Dataset</h3>
               <p>No abstract.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>Examining the Impact of Bank Infrastructure on Credit Taken by Women</h3>
               <p>No abstract.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>An Unsupervised Approach for Computing the Women Empowerment Index</h3>
               <p>No abstract.</p>
@@ -586,26 +613,26 @@
           <h2 style="margin-bottom:20px;">Reports</h2>
           <div class="cards">
 
-            <div class="card">
+            <div class="card" data-status="completed">
               <div class="when">May 2026</div>
               <h3><a href="https://www.researchgate.net/publication/410655817_PMGSY_Final_Report_May_21_2026?_tp=eyJjb250ZXh0Ijp7InBhZ2UiOiJwcm9maWxlIiwicHJldmlvdXNQYWdlIjoiaG9tZSIsInBvc2l0aW9uIjoicGFnZUNvbnRlbnQifX0" target="_blank" rel="noopener">Impact Evaluation of PMGSY</a></h3>
               <p>Rural road connectivity is a foundational input for inclusive economic growth and social development. By improving physical access to markets, schools, health facilities, job opportunities, and administrative centres, rural roads act as enablers that shape livelihoods, human capital formation, and quality of life. The Pradhan Mantri Gram Sadak Yojana (PMGSY), launched in 2000, represents one of the largest rural infrastructure programmes in India, with the explicit objective of providing all weather road connectivity to eligible unconnected habitations. Over successive phases, the programme has expanded from basic connectivity to consolidation, upgradation (to provide connectivity to markets, schools &amp; hospitals) and coverage of difficult and underserved regions.</p>
               <a class="btn-sm" style="margin-top:12px;" href="https://drive.google.com/file/d/1SMqLP_FUAGcfFajXRgN9op3HbF3i3m0v/view?usp=drive_link" target="_blank" rel="noopener">View Report ↗</a>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>Impact Evaluation of GMR Varalakshmi Foundation (GMRVF) on Rajam and Nearby Mandals (Blocks)</h3>
               <p>The GMR group established its Corporate Social Responsibility (CSR) arm, the GMR Varalakshmi Foundation (GMRVF), in 1993. The Vision of the Foundation is to make a sustainable impact on the human development of underserved communities through initiatives in Education, Healthcare and Livelihoods. The objectives of the study are two-fold. First is to study the direct impact indicators on the initiatives undertaken by the GMRVF in Rajam town and the villages in the Rajam Mandal on areas mentioned above, and two, studying the regional impact of the GMRVF on economic upgradation and social transformation.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>Economic Survey 2025-26, Uttarakhand</h3>
               <p>The main objective of the exercise is to first time ‘model’ the key fiscal numbers of Uttarakhand, namely revenue, expenditures, deficits and debt for 2026−27, while keeping the GYAN needs in perspective. The GYAN stands for Garibi (Poverty), Yuva (Youth), Annadata (Farmers) and Nari (Women). The projected fiscal numbers for the State should be sustainable in the medium-run and ensure that Uttarakhand remains fiscally disciplined. This will form inputs to budgets in 2025−26.</p>
             </div>
 
-            <div class="card">
+            <div class="card" data-status="ongoing">
               <div class="when">Ongoing</div>
               <h3>Navigating Autonomy: Measuring Educated Women’s Empowerment in Urban India</h3>
               <p>No abstract.</p>
@@ -620,7 +647,7 @@
           <h2 style="margin-bottom:20px;">Articles</h2>
           <div class="cards">
 
-            <div class="card">
+            <div class="card" data-status="none">
               <p style="margin:0;">Articles coming soon.</p>
             </div>
 
@@ -640,6 +667,25 @@
     document.getElementById('page-'+name).classList.add('active');
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.page===name));
     window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function filterResearch(filter){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active', b.dataset.filter===filter));
+    var anyVisible = false;
+    document.querySelectorAll('#page-research .block').forEach(function(block){
+      var cards = block.querySelectorAll('.card');
+      if(!cards.length) return;
+      var visible = 0;
+      cards.forEach(function(c){
+        var st = c.dataset.status;
+        var show = (filter==='all') || (st===filter);
+        c.style.display = show ? '' : 'none';
+        if(show) visible++;
+      });
+      block.style.display = visible ? '' : 'none';
+      if(visible) anyVisible = true;
+    });
+    document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
   }
 </script>
 
